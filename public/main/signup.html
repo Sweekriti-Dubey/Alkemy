@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="../styles/signup.css">
+    <!-- Firebase SDK for Authentication -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <!-- Firebase configuration -->
+    <script src="../scripts/firebase-config.js"></script>
+</head>
+<body>
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
+        <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Sign Up</h2>
+        <div id="error-message" class="text-red-600 text-sm mb-4 hidden"></div>
+        <form id="signupForm" action="#" method="POST">
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                <input type="email" id="email" name="email" required
+                    class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+            <div class="mb-6">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" name="password" required
+                    class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+            <div class="mb-4">
+                <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+                <select id="role" name="role" required
+                    class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
+                <select id="department" name="department" required
+                    class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="engineering">Department of Engineering</option>
+                    <option value="management">Department of Management Studies</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="year" class="block text-sm font-medium text-gray-700">Year of Study</label>
+                <select id="year" name="year" required
+                    class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+            </div>
+            <button type="submit"
+                class="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                aria-label="Sign up button">
+                Sign Up
+            </button>
+            <div class="mt-4 text-center">
+                <p class="text-sm text-gray-600">Already have an account? 
+                    <a href="login.html" class="text-blue-500 hover:text-blue-700">Login</a></p>
+            </div>
+        </form>
+    </div>
+
+    <!-- Link to signup.js file -->
+    <script src="../scripts/signup.js"></script>
+
+</body>
+</html>
