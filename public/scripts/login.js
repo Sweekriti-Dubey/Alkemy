@@ -7,17 +7,39 @@ document.addEventListener("DOMContentLoaded", function () {
         loginForm.addEventListener("submit", async (event) => {
             event.preventDefault();
 
+            // Get input values
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
 
+            // Clear error message
+            errorMessage.classList.add("hidden");
+
             try {
+                // Sign in user with Firebase Authentication
                 const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
                 const user = userCredential.user;
 
+                // Check if email is verified
+                if (!user.emailVerified) {
+                    errorMessage.textContent = "Please verify your email address.";
+                    errorMessage.classList.remove("hidden");
+                    return;
+                }
+
+                // Check user role in Firestore
                 const userDoc = await firebase.firestore().collection("users").doc(user.uid).get();
                 if (userDoc.exists) {
-                    const role = userDoc.data().role;
-                    window.location.href = role === "admin" ? "admin.html" : "userhomepage.html";
+                    const userData = userDoc.data();
+                    const role = userData.role;
+
+                    // Redirect based on user role
+                    if (role === "admin") {
+                        window.location.href = "admin.html";
+                    } else if (role === "organizer") {
+                        window.location.href = "organizerhomepage.html";
+                    } else {
+                        window.location.href = "userhomepage.html";
+                    }
                 } else {
                     errorMessage.textContent = "User data not found.";
                     errorMessage.classList.remove("hidden");
@@ -32,20 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (googleLoginBtn) {
         googleLoginBtn.addEventListener("click", async () => {
             const provider = new firebase.auth.GoogleAuthProvider();
-            provider.setCustomParameters({ prompt: "select_account" });
 
             try {
-                const result = await firebase.auth().signInWithPopup(provider);
-                const user = result.user;
-
-                const userDoc = await firebase.firestore().collection("users").doc(user.uid).get();
-                if (userDoc.exists) {
-                    const role = userDoc.data().role;
-                    window.location.href = role === "admin" ? "admin.html" : "userhomepage.html";
-                } else {
-                    errorMessage.textContent = "User data not found.";
-                    errorMessage.classList.remove("hidden");
-                }
+                await firebase.auth().signInWithRedirect(provider);
             } catch (error) {
                 errorMessage.textContent = `Error signing in with Google: ${error.message}`;
                 errorMessage.classList.remove("hidden");
@@ -53,15 +64,40 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    const logoutBtn = document.getElementById("logoutBtn");
-    if (logoutBtn) {
-        logoutBtn.addEventListener("click", async () => {
-            try {
-                await firebase.auth().signOut();
-                window.location.href = "login.html";
-            } catch (error) {
-                console.error("Error logging out:", error.message);
+    // Handle the redirect result
+    firebase.auth().getRedirectResult().then(async (result) => {
+        if (result.user) {
+            const user = result.user;
+
+            // Check if email is verified
+            if (!user.emailVerified) {
+                errorMessage.textContent = "Please verify your email address.";
+                errorMessage.classList.remove("hidden");
+                return;
             }
-        });
-    }
+
+            // Check user role in Firestore
+            const userDoc = await firebase.firestore().collection("users").doc(user.uid).get();
+            if (userDoc.exists) {
+                const userData = userDoc.data();
+                const role = userData.role;
+
+                // Redirect based on user role
+                if (role === "admin") {
+                    window.location.href = "admin.html";
+                } else if (role === "organizer") {
+                    window.location.href = "organizerhomepage.html";
+                } else {
+                    window.location.href = "userhomepage.html";
+                }
+            } else {
+                errorMessage.textContent = "User data not found.";
+                errorMessage.classList.remove("hidden");
+            }
+        }
+    }).catch((error) => {
+        const errorMessage = document.getElementById("error-message");
+        errorMessage.textContent = `Error signing in with Google: ${error.message}`;
+        errorMessage.classList.remove("hidden");
+    });
 });
