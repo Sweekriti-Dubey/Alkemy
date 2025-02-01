@@ -5,58 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="../styles/signup.css">
-    <!-- Firebase SDK for Authentication -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-    <!-- Firebase configuration -->
-    <script src="../scripts/firebase-config.js"></script>
 </head>
 <body>
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
+    <div class="signup-container bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Sign Up</h2>
-        <div id="error-message" class="text-red-600 text-sm mb-4 hidden"></div>
         <form id="signupForm" action="#" method="POST">
+            <div id="error-message" class="hidden"></div> <!-- Add this line -->
             <div class="mb-4">
                 <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
                 <input type="email" id="email" name="email" required
                     class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             </div>
-            <div class="mb-6">
+            <div class="mb-4 relative">
                 <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" id="password" name="password" required
-                    class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            </div>
-            <div class="mb-4">
-                <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-                <select id="role" name="role" required
-                    class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
-                <select id="department" name="department" required
-                    class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option value="engineering">Department of Engineering</option>
-                    <option value="management">Department of Management Studies</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="year" class="block text-sm font-medium text-gray-700">Year of Study</label>
-                <select id="year" name="year" required
-                    class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option value="1">1st Year</option>
-                    <option value="2">2nd Year</option>
-                    <option value="3">3rd Year</option>
-                    <option value="4">4th Year</option>
-                </select>
+                <div class="relative">
+                    <input type="password" id="password" name="password" required
+                        class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 cursor-pointer" id="togglePassword">
+                        <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-.274 1.057-.732 2.057-1.458 3-1.274 1.057-3.065 3-7.542 3-4.477 0-6.268-1.943-7.542-3-.726-.943-1.184-1.943-1.458-3z"></path>
+                        </svg>
+                    </span>
+                </div>
             </div>
             <button type="submit"
                 class="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
                 aria-label="Sign up button">
                 Sign Up
+            </button>
+            <button type="button" id="googleSignUpBtn"
+                class="w-full py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300 mt-4"
+                aria-label="Sign up with Google button">
+                Sign Up with Google
             </button>
             <div class="mt-4 text-center">
                 <p class="text-sm text-gray-600">Already have an account? 
@@ -65,8 +46,20 @@
         </form>
     </div>
 
-    <!-- Link to signup.js file -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <!-- Firebase configuration -->
+    <script src="../scripts/firebase-config.js"></script>
+    <!-- Your custom scripts -->
     <script src="../scripts/signup.js"></script>
-
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordField = document.getElementById('password');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+        });
+    </script>
 </body>
 </html>

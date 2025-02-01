@@ -1,63 +1,64 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Login form submission event handler
+document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("loginForm");
     const errorMessage = document.getElementById("error-message");
+    const googleLoginBtn = document.getElementById("googleLoginBtn");
 
     if (loginForm) {
         loginForm.addEventListener("submit", async (event) => {
             event.preventDefault();
 
-            const email = document.getElementById("email").value;
+            const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
 
             try {
                 const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
                 const user = userCredential.user;
 
-                console.log("User logged in successfully:", user.uid);
-
-                // Check if the user is an admin
                 const userDoc = await firebase.firestore().collection("users").doc(user.uid).get();
                 if (userDoc.exists) {
-                    const userData = userDoc.data();
-                    console.log("User data:", userData);
-
-                    if (userData.role === "admin") {
-                        // Redirect to admin homepage
-                        console.log("Redirecting to admin homepage");
-                        window.location.href = "../main/admin.html";
-                    } else {
-                        // Redirect to user homepage or handle after login
-                        console.log("Redirecting to user homepage");
-                        window.location.href = "user-homepage.html"; // Replace with your user homepage
-                    }
+                    const role = userDoc.data().role;
+                    window.location.href = role === "admin" ? "admin.html" : "userhomepage.html";
                 } else {
-                    console.error("No user document found");
-                    if (errorMessage) {
-                        errorMessage.textContent = "No user document found";
-                        errorMessage.classList.remove("hidden");
-                    }
-                }
-            } catch (error) {
-                // Display user-friendly error message
-                if (errorMessage) {
-                    errorMessage.textContent = `Error logging in: ${error.message}`;
+                    errorMessage.textContent = "User data not found.";
                     errorMessage.classList.remove("hidden");
                 }
-                console.error("Error logging in:", error.message);
+            } catch (error) {
+                errorMessage.textContent = `Error logging in: ${error.message}`;
+                errorMessage.classList.remove("hidden");
             }
         });
     }
 
-    // Logout button event handler
+    if (googleLoginBtn) {
+        googleLoginBtn.addEventListener("click", async () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            provider.setCustomParameters({ prompt: "select_account" });
+
+            try {
+                const result = await firebase.auth().signInWithPopup(provider);
+                const user = result.user;
+
+                const userDoc = await firebase.firestore().collection("users").doc(user.uid).get();
+                if (userDoc.exists) {
+                    const role = userDoc.data().role;
+                    window.location.href = role === "admin" ? "admin.html" : "userhomepage.html";
+                } else {
+                    errorMessage.textContent = "User data not found.";
+                    errorMessage.classList.remove("hidden");
+                }
+            } catch (error) {
+                errorMessage.textContent = `Error signing in with Google: ${error.message}`;
+                errorMessage.classList.remove("hidden");
+            }
+        });
+    }
+
     const logoutBtn = document.getElementById("logoutBtn");
     if (logoutBtn) {
         logoutBtn.addEventListener("click", async () => {
             try {
                 await firebase.auth().signOut();
-                console.log("User logged out successfully!");
-                // Redirect to the login page or handle after logout
-                window.location.href = "../main/login.html";
+                window.location.href = "login.html";
             } catch (error) {
                 console.error("Error logging out:", error.message);
             }
