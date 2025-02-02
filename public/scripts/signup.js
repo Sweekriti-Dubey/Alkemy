@@ -17,43 +17,37 @@ document.addEventListener("DOMContentLoaded", function () {
             errorMessage.classList.add("hidden");
 
             try {
-                // Check if user already exists in Firestore
-                const userDoc = await firebase.firestore().collection("users").where("email", "==", email).get();
-                if (!userDoc.empty) {
-                    errorMessage.textContent = "User already exists. Please log in.";
-                    errorMessage.classList.remove("hidden");
-                    return;
-                }
-
                 // Create user with Firebase Authentication
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 const user = userCredential.user;
 
-                // Determine user role based on email
-                let role;
-                if (allowedAdminEmails.includes(email)) {
-                    role = "admin";
-                } else if (allowedOrganizerEmails.includes(email)) {
-                    role = "organizer";
-                } else {
-                    role = "user";
-                }
-
-                // Store user details in Firestore
-                await firebase.firestore().collection("users").doc(user.uid).set({
-                    email: email,
-                    role: role,  // 'admin', 'organizer', or 'user'
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                // Send request to Netlify function to set custom claims
+                const response = await fetch('/.netlify/functions/setCustomClaims', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        uid: user.uid,
+                        email: user.email
+                    })
                 });
 
-                // Redirect based on user role
-                if (role === "admin") {
-                    window.location.href = "admin.html";
-                } else if (role === "organizer") {
-                    window.location.href = "organizerhomepage.html";
-                } else {
-                    window.location.href = "userhomepage.html";
+                const result = await response.json();
+                if (response.status !== 200) {
+                    throw new Error(result.error || 'Failed to set custom claims');
                 }
+
+                // Redirect based on user role
+                await firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+                    const role = idTokenResult.claims.role;
+                    if (role === 'admin') {
+                        window.location.href = "admin.html";
+                    } else if (role === 'organizer') {
+                        window.location.href = "organizerhomepage.html";
+                    } else {
+                        window.location.href = "userhomepage.html";
+                    }
+                });
+
             } catch (error) {
                 errorMessage.textContent = `Error signing up: ${error.message}`;
                 errorMessage.classList.remove("hidden");
