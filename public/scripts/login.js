@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("loginForm");
     const errorMessage = document.getElementById("error-message");
-    const googleLoginBtn = document.getElementById("googleLoginBtn");
 
     if (loginForm) {
         loginForm.addEventListener("submit", async (event) => {
@@ -50,54 +49,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
-    if (googleLoginBtn) {
-        googleLoginBtn.addEventListener("click", async () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-
-            try {
-                await firebase.auth().signInWithRedirect(provider);
-            } catch (error) {
-                errorMessage.textContent = `Error signing in with Google: ${error.message}`;
-                errorMessage.classList.remove("hidden");
-            }
-        });
-    }
-
-    // Handle the redirect result
-    firebase.auth().getRedirectResult().then(async (result) => {
-        if (result.user) {
-            const user = result.user;
-
-            // Check if email is verified
-            if (!user.emailVerified) {
-                errorMessage.textContent = "Please verify your email address.";
-                errorMessage.classList.remove("hidden");
-                return;
-            }
-
-            // Check user role in Firestore
-            const userDoc = await firebase.firestore().collection("users").doc(user.uid).get();
-            if (userDoc.exists) {
-                const userData = userDoc.data();
-                const role = userData.role;
-
-                // Redirect based on user role
-                if (role === "admin") {
-                    window.location.href = "admin.html";
-                } else if (role === "organizer") {
-                    window.location.href = "organizerhomepage.html";
-                } else {
-                    window.location.href = "userhomepage.html";
-                }
-            } else {
-                errorMessage.textContent = "User data not found.";
-                errorMessage.classList.remove("hidden");
-            }
-        }
-    }).catch((error) => {
-        const errorMessage = document.getElementById("error-message");
-        errorMessage.textContent = `Error signing in with Google: ${error.message}`;
-        errorMessage.classList.remove("hidden");
-    });
 });
