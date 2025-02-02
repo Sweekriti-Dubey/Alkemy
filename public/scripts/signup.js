@@ -1,72 +1,42 @@
-// filepath: /c:/Users/dev/OneDrive/alkemywebsite/public/scripts/signup.js
-const allowedAdminEmails = ["sweekritidubey1@gmail.com", "sweekritidubey13@gmail.com", "kuhudubey77@gmail.com"];
-const allowedOrganizerEmails = ["organizer1@example.com", "organizer2@example.com"]; // Add organizer emails here
-
 document.addEventListener("DOMContentLoaded", function () {
-    const signupForm = document.getElementById("signupForm");
+    const googleSignUpBtn = document.getElementById("googleSignUpBtn");
     const errorMessage = document.getElementById("error-message");
+    const adminEmails = ["sweekritidubey13@gmail.com", "kuhudubey77@gmail.com"];
 
-    if (signupForm) {
-        signupForm.addEventListener("submit", async (event) => {
-            event.preventDefault();
-
-            // Get input values
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value;
-
+    if (googleSignUpBtn) {
+        googleSignUpBtn.addEventListener("click", async () => {
             // Clear error message
             errorMessage.classList.add("hidden");
 
             try {
-                // Check if user already exists in Firestore
-                const userDoc = await firebase.firestore().collection("users").where("email", "==", email).get();
-                if (!userDoc.empty) {
-                    errorMessage.textContent = "User already exists. Please log in.";
+                // Sign in user with Google
+                const provider = new firebase.auth.GoogleAuthProvider();
+                const result = await firebase.auth().signInWithPopup(provider);
+                const user = result.user;
+
+                // Check if the user already exists
+                const userDoc = await firebase.firestore().collection("users").doc(user.uid).get();
+                if (userDoc.exists) {
+                    errorMessage.textContent = "Account already exists.";
                     errorMessage.classList.remove("hidden");
                     return;
                 }
 
-                // Create user with Firebase Authentication
-                const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-                const user = userCredential.user;
-
-                // Determine user role based on email
-                let role;
-                if (allowedAdminEmails.includes(email)) {
+                // Determine user role
+                let role = "user";
+                if (adminEmails.includes(user.email)) {
                     role = "admin";
-                } else if (allowedOrganizerEmails.includes(email)) {
-                    role = "organizer";
-                } else {
-                    role = "user";
                 }
 
-                // Store user details in Firestore
+                // Create user profile in Firestore with the role
                 await firebase.firestore().collection("users").doc(user.uid).set({
-                    email: email,
+                    email: user.email,
                     role: role,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 });
-
-                // Send request to Netlify function to set custom claims
-                const response = await fetch('/.netlify/functions/setCustomClaims', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        uid: user.uid,
-                        email: user.email
-                    })
-                });
-
-                const result = await response.json();
-                if (response.status !== 200) {
-                    throw new Error(result.error || 'Failed to set custom claims');
-                }
 
                 // Redirect based on user role
                 if (role === "admin") {
                     window.location.href = "admin.html";
-                } else if (role === "organizer") {
-                    window.location.href = "organizerhomepage.html";
                 } else {
                     window.location.href = "userhomepage.html";
                 }
