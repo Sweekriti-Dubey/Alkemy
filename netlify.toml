@@ -1,9 +1,0 @@
-[build]
-  publish = "public"   # Publish the contents of the public folder
-  # If you use any build tool, specify it here
-  # command = "npm run build"
-
-[[redirects]]
-  from = "/login"
-  to = "/main/login.html"
-  status = 200
