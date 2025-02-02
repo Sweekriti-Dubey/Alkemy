@@ -1,3 +1,6 @@
+const allowedAdminEmails = ["sweekritidubey1@gmail.com", "sweekritidubey13@gmail.com", "kuhudubey77@gmail.com"];
+const allowedOrganizerEmails = ["organizer1@example.com", "organizer2@example.com"]; // Add organizer emails here
+
 document.addEventListener("DOMContentLoaded", function () {
     const signupForm = document.getElementById("signupForm");
     const errorMessage = document.getElementById("error-message");
@@ -15,20 +18,17 @@ document.addEventListener("DOMContentLoaded", function () {
             errorMessage.classList.add("hidden");
 
             try {
-                // Check if user already exists in Firestore
-                const userDoc = await firebase.firestore().collection("users").where("email", "==", email).get();
-                if (!userDoc.empty) {
-                    errorMessage.textContent = "User already exists. Please log in.";
-                    errorMessage.classList.remove("hidden");
-                    return;
-                }
-
                 // Create user with Firebase Authentication
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 const user = userCredential.user;
 
-                // Send email verification
-                await user.sendEmailVerification();
+                // Check if user exists in Firestore
+                const userDoc = await firebase.firestore().collection("users").doc(user.uid).get();
+                if (userDoc.exists) {
+                    errorMessage.textContent = "User already exists. Please log in.";
+                    errorMessage.classList.remove("hidden");
+                    return;
+                }
 
                 // Determine user role based on email
                 let role;
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (result.user) {
             const user = result.user;
 
-            // Check if user already exists in Firestore
+            // Check if user exists in Firestore
             const userDoc = await firebase.firestore().collection("users").doc(user.uid).get();
             if (userDoc.exists) {
                 errorMessage.textContent = "User already exists. Please log in.";
