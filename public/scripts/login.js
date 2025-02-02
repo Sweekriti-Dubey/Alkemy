@@ -18,13 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
                 const user = userCredential.user;
 
-                // Check if email is verified
-                if (!user.emailVerified) {
-                    errorMessage.textContent = "Please verify your email address.";
-                    errorMessage.classList.remove("hidden");
-                    return;
-                }
-
                 // Check user role in Firestore
                 const userDoc = await firebase.firestore().collection("users").doc(user.uid).get();
                 if (userDoc.exists) {

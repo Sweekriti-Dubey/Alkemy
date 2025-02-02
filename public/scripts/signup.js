@@ -1,5 +1,5 @@
 const allowedAdminEmails = ["sweekritidubey1@gmail.com", "sweekritidubey13@gmail.com", "kuhudubey77@gmail.com"];
-const allowedOrganizerEmails = ["organizer1@example.com", "organizer2@example.com"]; // Add organizer emails here
+const allowedOrganizerEmails = ["organizer1@example.com", "organizer2@example.com"];
 
 document.addEventListener("DOMContentLoaded", function () {
     const signupForm = document.getElementById("signupForm");
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Store user details in Firestore
                 await firebase.firestore().collection("users").doc(user.uid).set({
                     email: email,
-                    role: role,
+                    role: role,  // 'admin', 'organizer', or 'user'
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 });
 
