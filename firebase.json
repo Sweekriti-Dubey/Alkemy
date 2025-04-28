@@ -7,17 +7,10 @@
       "**/node_modules/**"
     ],
     "rewrites": [
-      {
-        "source": "/signup.html",
-        "destination": "/signup.html"
-      },
-      {
-        "source": "/login.html",
-        "destination": "/login.html"
-      },
+
       {
         "source": "/**",
-        "destination": "/index.html"
+        "destination": "index.html"
       }
     ]
   }

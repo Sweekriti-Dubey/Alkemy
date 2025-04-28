@@ -1,0 +1,88 @@
+/* General styles */
+.hidden {
+  display: none !important;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+header {
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  margin: 0;
+}
+
+main {
+  padding: 20px;
+}
+
+/* Event categories container */
+.event-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Event category box */
+.event-category {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.event-category:hover {
+  transform: translateY(-10px);
+}
+
+/* Event box content */
+.event-box h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+/* Button styles */
+.category-btn {
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.category-btn:hover {
+  background-color: #45a049;
+}
+
+/* Admin and user control sections */
+.hidden {
+  display: none;
+}
+
+/* Flex layout for buttons and categories */
+.event-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}

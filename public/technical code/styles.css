@@ -1,0 +1,119 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212; 
+    color: #ffffff; 
+}
+
+header {
+    background-image: url('tech.jpg'); 
+    color: white;
+    padding: 50px 30px;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #4CAF50; /* Green color for links */
+    text-decoration: none;
+}
+
+#hero {
+    background-color: #282828; /* Darker hero section */
+    padding: 50px 20px;
+    text-align: center;
+}
+
+#events {
+    padding: 20px;
+}
+
+.event-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.event-item {
+    background-color: #1f1f1f; /* Dark background for event items */
+    border: 1px solid #444; /* Slightly lighter border */
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    width: 80%;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #1f1f1f; /* Dark footer background */
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+.event-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green background for buttons */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.event-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+#registration {
+    padding: 20px;
+    background-color: #1f1f1f; /* Dark background for registration section */
+    color: white; /* White text color */
+    border-radius: 5px;
+    margin: 20px auto;
+    width: 80%;
+}
+
+#registration h2 {
+    text-align: center;
+}
+
+#registration form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#registration label {
+    margin: 10px 0 5px;
+}
+
+#registration input,
+#registration select {
+    padding: 10px;
+    width: 80%;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#registration button {
+    padding: 10px 20px;
+    background-color: #4CAF50; 
+}

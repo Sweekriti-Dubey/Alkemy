@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ALKEMY - Event Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <link rel="icon" href="data:,">
+    <style>
+        .header .navbar a, .header .btn {
+            margin-left: 10px;
+        }
+        .header .btn {
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+        .header .admin-controls {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo">
+            <img src="../images/logoo.png" alt="Alkemy Logo" class="logo-img" />
+        </a>
+        <a href="#" class="logo"><span>A</span>lkemy</a>
+        <nav class="navbar">
+            <a href="#home">home</a>
+            <a href="#about">about</a>
+            <a href="#gallery">past events</a>
+            <a href="register.html">register</a>
+        </nav>
+        <div id="admin-controls" class="admin-controls hidden">
+            <a href="create-event.html" class="btn bg-blue-500 text-white px-4 py-2 rounded">Create Event</a>
+            <button id="downloadExcel" class="btn bg-green-500 text-white px-4 py-2 rounded" style="display: none;">Download Excel</button>
+        </div>
+        <div id="menu-bars" class="fas fa-bars"></div>
+    </header>
+
+    <section class="home" id="home">
+        <div class="content">
+            <h3><span> Alkemy events </span></h3>
+        </div>
+        <div class="swiper-container home-slider">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <a href="../Esports/E-Sports.html">
+                  <img src="../images/a.jpg" alt="E-sports" />
+                  <h1>E-sports</h1>
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="../sports/Sports.html">
+                  <img src="../images/b.jpg" alt="Sports" />
+                  <h1>Sports</h1>
+                </a> 
+              </div>
+              <div class="swiper-slide">
+                <a href="../technical code/technical.html">
+                  <img src="../images/c.jpg" alt="Technical" />
+                  <h1>Technical</h1>
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="../cultural/cultural/cultural.html">
+                  <img src="../images/d.jpg" alt="Cultural" />
+                  <h1>Cultural</h1>
+                </a>
+              </div>
+            </div>
+          </div>
+    </section>
+
+    <section class="about" id="about">
+        <h1 class="heading"><span>about</span> us</h1>
+  
+        <div class="row">
+          <div class="image">
+            <img src="../images/10.jpg" alt="" />
+          </div>
+  
+          <div class="content">
+            
+            <p>
+              Welcome to ALKEMY, a student-run event management team dedicated to bringing creativity, organization, and fun to every event we plan. As a group of passionate college students, we understand the importance of creating memorable experiences that connect people, foster community, and bring fresh ideas to life.
+              We specialize in organizing a wide range of events—from workshops, seminars, and networking sessions to celebrations, talent shows, and themed parties. Our goal is to create an environment where every attendee feels engaged, inspired, and entertained, all while staying within budget and timelines.
+            </p>
+            <p>
+              At Alkemy, we believe that collaboration, communication, and attention to detail are key to pulling off a successful event. Our team works tirelessly to plan, coordinate, and execute every aspect of the event, ensuring a smooth and enjoyable experience for all.
+              Whether you're a student group looking to host your next social event, or a faculty member in need of a conference setup, we are here to make it happen—efficiently, creatively, and with a personal touch.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="gallery" id="gallery">
+        <h1 class="heading">past <span>events</span></h1>
+  
+        <div class="box-container">
+          <div class="box">
+            <img src="../images/1.webp" alt="" />
+            <h3 class="title">best events</h3>
+            <div class="icons">
+              <a href="#" class="fas fa-heart"></a>
+              <a href="#" class="fas fa-share"></a>
+              <a href="#" class="fas fa-eye"></a>
+            </div>
+          </div>
+  
+          <div class="box">
+            <img src="../images/2.jpeg" alt="" />
+            <h3 class="title">best events</h3>
+            <div class="icons">
+              <a href="#" class="fas fa-heart"></a>
+              <a href="#" class="fas fa-share"></a>
+              <a href="#" class="fas fa-eye"></a>
+            </div>
+          </div>
+  
+          <div class="box">
+            <img src="../images/3.jpeg" alt="" />
+            <h3 class="title">best events</h3>
+            <div class="icons">
+              <a href="#" class="fas fa-heart"></a>
+              <a href="#" class="fas fa-share"></a>
+              <a href="#" class="fas fa-eye"></a>
+            </div>
+          </div>
+  
+          <div class="box">
+            <img src="../images/4.jpeg" alt="" />
+            <h3 class="title">best events</h3>
+            <div class="icons">
+              <a href="#" class="fas fa-heart"></a>
+              <a href="#" class="fas fa-share"></a>
+              <a href="#" class="fas fa-eye"></a>
+            </div>
+          </div>
+  
+          <div class="box">
+            <img src="../images/5.jpeg" alt="" />
+            <h3 class="title">best events</h3>
+            <div class="icons">
+              <a href="#" class="fas fa-heart"></a>
+              <a href="#" class="fas fa-share"></a>
+              <a href="#" class="fas fa-eye"></a>
+            </div>
+          </div>
+  
+          <div class="box">
+            <img src="../images/6.jpeg" alt="" />
+            <h3 class="title">best events</h3>
+            <div class="icons">
+              <a href="#" class="fas fa-heart"></a>
+              <a href="#" class="fas fa-share"></a>
+              <a href="#" class="fas fa-eye"></a>
+            </div>
+          </div>
+  
+          <div class="box">
+            <img src="../images/7.jpeg" alt="" />
+            <h3 class="title">best events</h3>
+            <div class="icons">
+              <a href="#" class="fas fa-heart"></a>
+              <a href="#" class="fas fa-share"></a>
+              <a href="#" class="fas fa-eye"></a>
+            </div>
+          </div>
+  
+          <div class="box">
+            <img src="../images/8.webp" alt="" />
+            <h3 class="title">best events</h3>
+            <div class="icons">
+              <a href="#" class="fas fa-heart"></a>
+              <a href="#" class="fas fa-share"></a>
+              <a href="#" class="fas fa-eye"></a>
+            </div>
+          </div>
+  
+          <div class="box">
+            <img src="../images/9.jpg" alt="" />
+            <h3 class="title">best events</h3>
+            <div class="icons">
+              <a href="#" class="fas fa-heart"></a>
+              <a href="#" class="fas fa-share"></a>
+              <a href="#" class="fas fa-eye"></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="register.html" class="register-btn">Register Now</a>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="register.html" style="display: inline-block; padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; text-align: center;">
+          Register Now
+        </a>
+      </div>
+
+    <!-- footer section starts  -->
+    <section class="footer">
+        <div class="box-container">
+          <div class="box">
+            <h3>branches</h3>
+            <a href="#"> <i class="fas fa-map-marker-alt"></i> Kharghar </a>
+            <a href="#"> <i class="fas fa-map-marker-alt"></i> Cbd Belapur </a>
+            <a href="#"> <i class="fas fa-map-marker-alt"></i> Pune </a>
+          </div>
+  
+          <div class="box">
+            <h3>quick links</h3>
+            <a href="#"> <i class="fas fa-arrow-right"></i> home </a>
+            <a href="#"> <i class="fas fa-arrow-right"></i> about </a>
+            <a href="#"> <i class="fas fa-arrow-right"></i> gallery </a>
+            <a href="#"> <i class="fas fa-arrow-right"></i> contact </a>
+          </div>
+  
+          <div class="box">
+            <h3>contact info</h3>
+            <a href="#"> <i class="fas fa-phone"></i> 9324123476 </a>
+            <a href="#"> <i class="fas fa-phone"></i> 9029395499 </a>
+            <a href="#"> <i class="fas fa-envelope"></i> janavidabholkar@gmail.com </a>
+            <a href="#"> <i class="fas fa-envelope"></i> sweekritidubey@gmail.com </a>
+            <a href="#">
+              <i class="fas fa-map-marker-alt"></i> Kharghar, india - 400614
+            </a>
+          </div>
+  
+          <div class="box">
+            <h3>follow us</h3>
+            <a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
+            <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
+            <a href="#"> <i class="fab fa-instagram"></i> instagram </a>
+          </div>
+        </div>
+  
+        <div class="credit">
+          created by <span>members</span> | all rights reserved
+        </div>
+      </section>
+
+      <!-- theme toggler  -->
+    <div class="theme-toggler">
+        <div class="toggle-btn">
+          <i class="fas fa-cog"></i>
+        </div>
+  
+        <h3>choose color</h3>
+  
+        <div class="buttons">
+          <div class="theme-btn" style="background: #ccff33"></div>
+          <div class="theme-btn" style="background: #d35400"></div>
+          <div class="theme-btn" style="background: #f39c12"></div>
+          <div class="theme-btn" style="background: #1abc9c"></div>
+          <div class="theme-btn" style="background: #3498db"></div>
+          <div class="theme-btn" style="background: #9b59b6"></div>
+        </div>
+      </div>
+      <!-- Firebase SDK -->
+      <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js"></script>
+      <script src="../scripts/firebase-config.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+        
+    <script defer src="../scripts/index.js"></script>
+    <script src="../scripts/app.js"></script>
+    <script src="../scripts/excel.js"></script>
+</body>
+</html>

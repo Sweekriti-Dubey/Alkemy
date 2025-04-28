@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management & Registration</title>
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #f8f9fa;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+            max-width: 600px;
+        }
+        header {
+            background: #1f1f1f;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .event-info {
+            background: #222;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+        }
+        .event-info h1 {
+            color: #ffcc00;
+        }
+        .registration-form {
+            background: #1e1e1e;
+            padding: 25px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+        }
+        .registration-form label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        .registration-form input, .registration-form select {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            background: #333;
+            color: #fff;
+            outline: none;
+        }
+        .register-btn {
+            background: linear-gradient(90deg, #ffcc00, #ff6600);
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .register-btn:hover {
+            background: linear-gradient(90deg, #ff6600, #ffcc00);
+            transform: scale(1.05);
+        }
+        .qr-code-section {
+            text-align: center;
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #222;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+        }
+        footer {
+            background: #1f1f1f;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to ALKEMY 2025</h1>
+    </header>
+
+    <div class="container">
+        <section class="event-info">
+            <h1>About the Event</h1>
+            <p>Join us for the biggest event to be hosted till date.</p>
+            <p><strong>Date:</strong> Feb-March, 2025 | <strong>Location:</strong> Bharati Vidyapeeth, Kharghar</p>
+        </section>
+
+        <section class="registration-form">
+            <h2>Register for the Event</h2>
+            <form id="eventForm">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your full name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+
+                <label for="phone">Phone number</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number" required>
+
+                <label for="category">Category</label>
+                <select id="category" required>
+                    <option value="">Choose a category</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="technical">Technical</option>
+                    <option value="sports">Sports</option>
+                    <option value="esports">E-sports</option>
+                </select>
+
+                <label for="event">Event</label>
+                <select id="event" required>
+                    <option value="">Choose an event</option>
+                </select>
+
+                <button type="submit" class="register-btn">Register Now</button>
+            </form>
+        </section>
+
+        <section class="qr-code-section" id="qr-code-section">
+            <h2>Event QR Code</h2>
+            <canvas id="qr-code"></canvas>
+            <p>Scan this QR code at the venue to mark your attendance.</p>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2025 Alkemy. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="../scripts/firebase-config.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const categorySelect = document.getElementById("category");
+            const eventSelect = document.getElementById("event");
+
+            categorySelect.addEventListener("change", async function () {
+                const category = categorySelect.value;
+                eventSelect.innerHTML = '<option value="">Loading events...</option>'; // Show loading state
+
+                if (!category) {
+                    eventSelect.innerHTML = '<option value="">Choose an event</option>';
+                    return;
+                }
+
+                try {
+                    const db = firebase.firestore();
+                    const eventsRef = db.collection("events").doc(category).collection("allEvents");
+                    const snapshot = await eventsRef.get();
+
+                    eventSelect.innerHTML = '<option value="">Choose an event</option>'; // Reset dropdown
+                    if (snapshot.empty) {
+                        eventSelect.innerHTML = '<option value="">No events found</option>';
+                        return;
+                    }
+                    snapshot.forEach(doc => {
+                        const eventData = doc.data();
+                        const option = document.createElement("option");
+                        option.value = eventData.name;
+                        option.textContent = eventData.name;
+                        eventSelect.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error("Error fetching events:", error);
+                    eventSelect.innerHTML = '<option value="">Failed to load events</option>';
+                }
+            });
+            document.getElementById("eventForm").addEventListener("submit", async function (event) {
+                event.preventDefault();
+                let name = document.getElementById("name").value;
+                let email = document.getElementById("email").value;
+                let phone = document.getElementById("phone").value;
+                let category = document.getElementById("category").value;
+                let eventName = document.getElementById("event").value;
+                if (!name || !email || !phone || !category || !eventName) {
+                    alert("Please fill in all fields.");
+                    return;
+                }
+                try {
+                    const db = firebase.firestore();
+                    const registrationRef = db.collection("registrations").doc(category).collection("allRegistrations").doc();
+                    const registrationId = registrationRef.id;
+                    await registrationRef.set({
+                        registrationId: registrationId,
+                        name, email, phone, category, eventName,
+                        attended: false,
+                        registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    });
+                    const qrCodeSection = document.getElementById("qr-code-section");
+                    const qrCodeCanvas = document.getElementById("qr-code");
+                    qrCodeSection.style.display = "block";
+                    QRCode.toCanvas(qrCodeCanvas, registrationId, function (error) {
+                        if (error) console.error("QR code error:", error);
+                        console.log("QR code generated successfully!");
+                    });
+                    alert(`Thank you, ${name}! You are registered for ${eventName}.`);
+                    document.getElementById("eventForm").reset();
+                } catch (error) {
+                    console.error("Error registering:", error);
+                    alert("Failed to register. Please try again.");
+                }
+            });
+            document.getElementById("downloadExcel").addEventListener("click", async function () {
+                const category = document.getElementById("category").value;
+                const eventName = document.getElementById("event").value;
+                if (!category || !eventName) {
+                    alert("Please select a category and event.");
+                    return;
+                }
+                try {
+                    const db = firebase.firestore();
+                    const registrationsRef = db.collection("registrations").doc(category).collection("allRegistrations");
+                    const snapshot = await registrationsRef.where("eventName", "==", eventName).get();
+                    if (snapshot.empty) {
+                        alert("No registrations found for the selected event.");
+                        return;
+                    }
+                    const registrations = [];
+                    snapshot.forEach(doc => {
+                        registrations.push(doc.data());
+                    });
+
+                    const worksheet = XLSX.utils.json_to_sheet(registrations);
+                    const workbook = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(workbook, worksheet, "Registrations");
+
+                    XLSX.writeFile(workbook, `${eventName}_registrations.xlsx`);
+                } catch (error) {
+                    console.error("Error downloading Excel:", error);
+                    alert("Failed to download Excel. Please try again.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
