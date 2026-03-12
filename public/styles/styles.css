@@ -4,7 +4,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
 :root {
-  --theme-color: #d351f0;
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --theme-color: #f5576c;
+  --accent-color: #f093fb;
+  --primary-color: #667eea;
+  --primary-dark: #764ba2;
+  --dark-bg: #0f0f1e;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --border-color: rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -16,7 +24,7 @@
   border: none;
   text-decoration: none;
   text-transform: capitalize;
-  transition: 0.2s linear;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html {
@@ -27,7 +35,8 @@ html {
 }
 
 body {
-  background: #4b1f51;
+  background: var(--dark-bg);
+  background-attachment: fixed;
 }
 
 section {
@@ -42,38 +51,67 @@ section {
   left: 0;
   right: 0;
   z-index: 10000;
-  background: #f5eeee;
+  background: rgba(15, 15, 30, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem 9%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
+
 .header .logo {
   display: flex; 
   align-items: center;
-  font-weight: bolder;
-  color: #0a0a0a;
+  font-weight: 700;
+  color: #fff;
   font-size: 2.5rem;
+  background: var(--secondary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .header .logo .logo-img {
   height: 50px; 
   width: auto; 
-  margin-right: 10px; 
+  margin-right: 10px;
+  filter: drop-shadow(0 0 10px rgba(245, 87, 108, 0.3));
 }
 
 .header .logo span {
-  color: var(--theme-color);
+  background: var(--secondary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .header .navbar a {
   font-size: 1.7rem;
-  color: #5a1818;
+  color: rgba(255, 255, 255, 0.7);
   margin-left: 2rem;
+  font-weight: 500;
+  position: relative;
+}
+
+.header .navbar a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--secondary-gradient);
+  transition: width 0.3s ease;
+}
+
+.header .navbar a:hover::after {
+  width: 100%;
 }
 
 .header .navbar a:hover {
-  color: var(--theme-color);
+  color: #fff;
 }
 
 #menu-bars {
@@ -107,22 +145,49 @@ section {
   display: inline-block;
   padding: 0.8rem 3rem;
   font-size: 1.7rem;
-  border-radius: 0.5rem;
-  background: #666;
+  border-radius: 50px;
+  background: var(--secondary-gradient);
   color: #fff;
   cursor: pointer;
   font-weight: 600;
+  box-shadow: 0 10px 25px rgba(245, 87, 108, 0.2);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
 }
 
 .btn:hover {
-  background: var(--theme-color);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(245, 87, 108, 0.3);
 }
 
 .home .home-slider .swiper-slide {
   overflow: hidden;
-  border-radius: 0.5rem;
+  border-radius: 15px;
   height: 50rem;
   width: 35rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.home .home-slider .swiper-slide:hover {
+  box-shadow: 0 20px 50px rgba(245, 87, 108, 0.3);
+  transform: scale(1.05);
 }
 
 .home .home-slider .swiper-slide img {
@@ -151,10 +216,20 @@ section {
 }
 
 .service .box-container .box {
-  border-radius: 0.5rem;
-  background: #333;
+  border-radius: 15px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
   text-align: center;
   padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.service .box-container .box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(245, 87, 108, 0.2);
+  border-color: rgba(245, 87, 108, 0.5);
 }
 
 .service .box-container .box i {
@@ -193,8 +268,9 @@ section {
 
 .about .row .image img {
   width: 100%;
-  border-radius: 0.5rem;
-  border: 1rem solid #333;
+  border-radius: 15px;
+  border: 1rem solid var(--border-color);
+  box-shadow: 0 15px 40px rgba(245, 87, 108, 0.15);
 }
 
 .about .row .content {
@@ -221,22 +297,33 @@ section {
 
 .gallery .box-container .box {
   position: relative;
-  border: 1rem solid #333;
-  border-radius: 0.5rem;
+  border: 1rem solid var(--border-color);
+  border-radius: 15px;
   height: 25rem;
   cursor: pointer;
   overflow: hidden;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .gallery .box-container .box img {
   height: 100%;
   width: 100%;
   object-fit: cover;
+  transition: all 0.4s ease;
+}
+
+.gallery .box-container .box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(245, 87, 108, 0.2);
+  border-color: rgba(245, 87, 108, 0.5);
 }
 
 .gallery .box-container .box:hover img {
   transform: scale(1.1);
-  filter: grayscale();
+  filter: brightness(1.2);
 }
 
 .gallery .box-container .box .title {
@@ -287,13 +374,18 @@ section {
 
 .price .box-container .box {
   padding: 2rem 0;
-  background: #333;
-  border-radius: 0.5rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
   text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .price .box-container .box:hover {
-  transform: scale(1.03);
+  transform: translateY(-10px);
+  border-color: rgba(245, 87, 108, 0.5);
+  box-shadow: 0 15px 40px rgba(245, 87, 108, 0.2);
 }
 
 .price .box-container .box .title {
@@ -326,10 +418,13 @@ section {
 }
 
 .reivew .box {
-  border-radius: 0.5rem;
-  background: #333;
+  border-radius: 15px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
   padding: 2rem;
   position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .reivew .box .fa-quote-right {
@@ -415,7 +510,9 @@ section {
 }
 
 .footer {
-  background: #111;
+  background: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
 }
 
 .footer .box-container {
