@@ -21,6 +21,9 @@
             display: flex;
             align-items: center;
         }
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -35,7 +38,7 @@
             <a href="#gallery">past events</a>
             <a href="register.html">register</a>
         </nav>
-        <div id="admin-controls" class="admin-controls hidden">
+        <div id="admin-controls" class="admin-controls" style="display: none;">
             <a href="create-event.html" class="btn bg-blue-500 text-white px-4 py-2 rounded">Create Event</a>
             <button id="downloadExcel" class="btn bg-green-500 text-white px-4 py-2 rounded" style="display: none;">Download Excel</button>
         </div>
@@ -193,10 +196,6 @@
           </div>
         </div>
       </section>
-
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="register.html" class="register-btn">Register Now</a>
-    </div>
 
     <!-- footer section starts  -->
     <section class="footer">

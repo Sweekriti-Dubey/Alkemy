@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "alkkemy",
     "public": "public",  
     "ignore": [
       "firebase.json",

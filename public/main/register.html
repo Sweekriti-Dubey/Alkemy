@@ -153,6 +153,13 @@
     <script src="../scripts/firebase-config.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // Auth guard — redirect unauthenticated users to login
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (!user) {
+                    window.location.href = "../index.html";
+                }
+            });
+
             const categorySelect = document.getElementById("category");
             const eventSelect = document.getElementById("event");
 

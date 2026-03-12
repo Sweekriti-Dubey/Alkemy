@@ -73,19 +73,21 @@ document.addEventListener("DOMContentLoaded", async function () {
   const downloadExcelButton = document.getElementById("downloadExcel");
   const adminControls = document.getElementById("admin-controls");
 
-  // Check if the user is an admin
   firebase.auth().onAuthStateChanged(async (user) => {
-      if (user) {
-          const db = firebase.firestore();
-          const userDoc = await db.collection("users").doc(user.uid).get();
-          if (userDoc.exists && userDoc.data().role === "admin") {
-              // Show admin controls (Create Event + Download Excel)
-              if (adminControls) {
-                  adminControls.classList.remove("hidden");
-              }
-              if (downloadExcelButton) {
-                  downloadExcelButton.style.display = "block";
-              }
+      if (!user) {
+          // Not logged in — redirect to login page
+          window.location.href = "../index.html";
+          return;
+      }
+
+      const db = firebase.firestore();
+      const userDoc = await db.collection("users").doc(user.uid).get();
+      if (userDoc.exists && userDoc.data().role === "admin") {
+          if (adminControls) {
+              adminControls.style.display = "flex";
+          }
+          if (downloadExcelButton) {
+              downloadExcelButton.style.display = "block";
           }
       }
   });
