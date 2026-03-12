@@ -1,6 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
   const eventForm = document.getElementById("event-form");
   
+  // Admin protection - redirect non-admin users
+  firebase.auth().onAuthStateChanged(async (user) => {
+    if (!user) {
+      alert("Please log in to access this page.");
+      window.location.href = "../index.html";
+      return;
+    }
+    
+    const db = firebase.firestore();
+    const userDoc = await db.collection("users").doc(user.uid).get();
+    
+    if (!userDoc.exists || userDoc.data().role !== "admin") {
+      alert("Access denied. Only admins can create events.");
+      window.location.href = "main.html";
+      return;
+    }
+  });
+  
   if (!eventForm) {
     console.error("❌ Event form not found! Check if the ID is correct.");
     return;

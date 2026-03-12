@@ -71,6 +71,7 @@ var swiper = new Swiper(".review-slider", {
 
 document.addEventListener("DOMContentLoaded", async function () {
   const downloadExcelButton = document.getElementById("downloadExcel");
+  const adminControls = document.getElementById("admin-controls");
 
   // Check if the user is an admin
   firebase.auth().onAuthStateChanged(async (user) => {
@@ -78,7 +79,13 @@ document.addEventListener("DOMContentLoaded", async function () {
           const db = firebase.firestore();
           const userDoc = await db.collection("users").doc(user.uid).get();
           if (userDoc.exists && userDoc.data().role === "admin") {
-              downloadExcelButton.style.display = "block";
+              // Show admin controls (Create Event + Download Excel)
+              if (adminControls) {
+                  adminControls.classList.remove("hidden");
+              }
+              if (downloadExcelButton) {
+                  downloadExcelButton.style.display = "block";
+              }
           }
       }
   });
