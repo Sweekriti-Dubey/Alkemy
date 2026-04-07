@@ -1,4 +1,4 @@
-const adminEmails = ["sweekritidubey13@gmail.com", "kuhudubey77@gmail.com"];
+const adminEmails = ["sweekritidubey13@gmail.com", "kuhudubey77@gmail.com", "vinitjadhav790@gmail.com", "hargesakib@gmail.com", "apoorvkate@gmail.com"];
 
 document.addEventListener("DOMContentLoaded", function () {
   const signupBtn = document.getElementById("signupBtn");
