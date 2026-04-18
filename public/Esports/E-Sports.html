@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Sports Events</title>
+    <style>
+       body {
+            margin: 100;
+            font-family: Arial, sans-serif;
+            background-color: rgb(87, 61, 180);
+            background-size: cover;
+            background-attachment: fixed;
+            text-align: center;
+        }
+
+        .container {
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            margin-bottom: 40px;
+        }
+
+        .events {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .event-card {
+            width: 190px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .event-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .event-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        .event-card p {
+            font-size: 1rem;
+            color: #ddd;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: rgba(0, 0, 0, 0.8);
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 900px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        h2 {
+            font-size: 2.5rem; /* Increased font size */
+            margin-bottom: 15px;
+            color: #ffd700; /* Yellow color */
+        }
+
+        .modal-content p {
+            font-size: 1.5rem; /* Increased font size */
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #ddd; /* Original color for values */
+        }
+
+        .modal-content .heading {
+            color: #ffd700; /* Yellow color for headings */
+        }
+
+        ul {
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul li {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        ul li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.3rem;
+            color: #ffd700;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin-top: 30px;
+            color: white;
+            background: linear-gradient(90deg, #ff4500, #ff6347, #ff4500);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: transform 0.3s, background 0.5s;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            background: linear-gradient(90deg, #ffd700, #ff4500, #ffd700);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body data-category="esports">
+    <div class="container">
+        <h1>E-Sports Events</h1>
+        <div id="event-list" class="events"></div>
+    </div>    
+        <!-- Modal for displaying event details -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-event-name"></h2>
+            <p><span class="heading">Description:</span> <span id="modal-event-description"></span></p>
+            <p><span class="heading">Type:</span> <span id="modal-event-type"></span></p>
+            <p><span class="heading">Coordinator:</span> <span id="modal-event-coordinator"></span></p>
+            <p><span class="heading">Prize:</span> <span id="modal-event-prize"></span></p>
+            <p><span class="heading">Rules:</span> <span id="modal-event-rules"></span></p>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js"></script>
+    <script src="../scripts/firebase-config.js"></script>
+    <script src="../scripts/fetch-events.js"></script> 
+</body>
+</html>

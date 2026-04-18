@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Event Management</title>
+
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="icon" href="data:,">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Initialization -->
+    <script src="../scripts/firebase-config.js"></script>
+
+    <!-- Link to External JS -->
+    <script defer src="../scripts/index.js"></script>
+
+    <!-- COOP and CORP Headers -->
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin-allow-popups">
+    <meta http-equiv="Cross-Origin-Resource-Policy" content="same-origin">
+</head>
+<body>
+    <header>
+        <img src="../images/logoo.png" alt="Event Logo" class="logo-img">
+        <h1>Event Management</h1>
+        <div class="auth-buttons">
+            <button id="signupBtn">Sign Up</button>
+            <button id="loginBtn">Log In</button>
+        </div>
+    </header>
+
+    <!-- Popup Notification -->
+    <div id="popup" class="hidden">
+        <div id="popup-content">
+            <p id="popup-message"></p>
+            <button id="popup-loginBtn">Log In</button>
+            <button id="close-popup">Close</button>
+        </div>
+    </div>
+
+    <!-- Firebase Excel Export Script -->
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+</body>
+</html>

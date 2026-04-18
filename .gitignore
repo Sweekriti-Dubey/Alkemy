@@ -1,0 +1,33 @@
+# Firebase Admin SDK JSON file
+netlify/functions/firebase-adminsdk.json
+
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# dotenv environment variables file
+.env
+
+# MacOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db

@@ -1,0 +1,107 @@
+/* General styles */
+.hidden {
+  display: none !important;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #0f0f1e 0%, #1a0f3e 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+header {
+  background: rgba(15, 15, 30, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin: 0;
+  color: #fff;
+}
+
+main {
+  padding: 20px;
+}
+
+/* Event categories container */
+.event-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Event category box */
+.event-category {
+  width: 200px;
+  height: 200px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #fff;
+}
+
+.event-category:hover {
+  transform: translateY(-10px);
+  border-color: rgba(245, 87, 108, 0.5);
+  box-shadow: 0 15px 40px rgba(245, 87, 108, 0.2);
+}
+
+/* Event box content */
+.event-box h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Button styles */
+.category-btn {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+}
+
+.category-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Admin and user control sections */
+.hidden {
+  display: none;
+}
+
+/* Flex layout for buttons and categories */
+.event-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+  margin-top: 20px;
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" data-category="technical"> <!-- Set the correct category here -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <link rel="stylesheet" href="../styles/events.css">
+</head>
+<body>
+
+    <header>
+        <h1>All Events</h1>
+        <button id="logoutBtn">Logout</button>
+    </header>
+
+    <main>
+        <div id="eventsList"></div> <!-- Event cards will be displayed here -->
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js"></script>
+    <script src="../scripts/firebase-config.js"></script>
+    <script src="../scripts/events.js"></script>
+</body>
+</html>

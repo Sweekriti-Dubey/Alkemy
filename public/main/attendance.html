@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Attendance</title>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="../scripts/firebase-config.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #reader { width: 350px; margin: auto; }
+        #status { font-weight: bold; color: green; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>Scan QR Code to Mark Attendance</h2>
+    <div id="reader"></div>
+    <p id="status"></p>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const db = firebase.firestore();
+
+            function onScanSuccess(qrMessage) {
+                document.getElementById("status").textContent = "Processing...";
+                console.log("Scanned QR Code:", qrMessage);
+
+                db.collection("registrations").get().then((categories) => {
+                    let found = false;
+
+                    categories.forEach((categoryDoc) => {
+                        db.collection("registrations")
+                            .doc(categoryDoc.id)
+                            .collection("allRegistrations")
+                            .doc(qrMessage)
+                            .get()
+                            .then((doc) => {
+                                if (doc.exists) {
+                                    found = true;
+                                    if (doc.data().attended) {
+                                        document.getElementById("status").textContent = "Already Marked Present!";
+                                    } else {
+                                        doc.ref.update({ attended: true }).then(() => {
+                                            document.getElementById("status").textContent = "✅ Attendance Marked!";
+                                        });
+                                    }
+                                }
+                            });
+                    });
+
+                    setTimeout(() => {
+                        if (!found) document.getElementById("status").textContent = "❌ Invalid QR Code!";
+                    }, 1000);
+                });
+            }
+
+            function onScanError(errorMessage) {
+                console.error(errorMessage);
+            }
+
+            const scanner = new Html5QrcodeScanner("reader", {
+                fps: 20, // Faster scanning
+                qrbox: { width: 300, height: 300 }, // Larger detection area
+                experimentalFeatures: { useBarCodeDetectorIfSupported: true }, // Native barcode API for speed
+                formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE], // Limit to QR codes only
+            });
+
+            scanner.render(onScanSuccess, onScanError);
+        });
+    </script>
+
+</body>
+</html>

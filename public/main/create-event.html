@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event</title>
+    <link rel="stylesheet" href="../styles/create-event.css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+
+    <header>
+        <h1>Create a New Event</h1>
+        <button id="backToDashboard" class="btn">Back to Dashboard</button>
+    </header>
+
+    <main>
+        <form id="event-form">
+            <div class="form-group">
+                <label for="event-name">Event Name:</label>
+                <input type="text" id="event-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category" required>
+                    <option value="" disabled selected>Select a category</option>
+                    <option value="technical">Technical</option>
+                    <option value="sports">Sports</option>
+                    <option value="esports">Esports</option>
+                    <option value="cultural">Cultural</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="event-type">Event Type:</label>
+                <select id="event-type" required>
+                    <option value="" disabled selected>Select event type</option>
+                    <option value="individual">Individual</option>
+                    <option value="team">Team</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="coordinator">Coordinator Name:</label>
+                <input type="text" id="coordinator" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Event Description:</label>
+                <textarea id="description" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="rules">Event Rules:</label>
+                <textarea id="rules" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="prize">Prize Details:</label>
+                <input type="text" id="prize" required>
+            </div>
+
+            <button type="submit" class="btn submit-btn">Create Event</button>
+        </form>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-storage-compat.js"></script>
+    <script src="../scripts/firebase-config.js"></script>
+    <script src="../scripts/create-event.js"></script>
+    
+    <script>
+        document.getElementById("backToDashboard").addEventListener("click", function() {
+            window.location.href = "main.html";
+        });
+    </script>
+
+</body>
+</html>
